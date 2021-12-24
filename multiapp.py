@@ -65,14 +65,6 @@ class MultiApp:
         # st.experimental_set_query_params(**st.session_state.to_dict())
         functions[titles.index(title)]()
 
-        st.sidebar.title("Contribute")
-        st.sidebar.info(
-            "This is an open source project and you are very welcome to contribute your "
-            "comments, questions, resources and apps as "
-            "[issues](https://github.com/ELROSTEM/shoreline-reconfiguration/issues) or "
-            "[pull requests](https://github.com/ELROSTEM/shoreline-reconfiguration/pulls) "
-            "to the [source code](https://github.com/ELROSTEM/shoreline-reconfiguration). "
-        )
         st.sidebar.title("About")
         st.sidebar.info(
             """
