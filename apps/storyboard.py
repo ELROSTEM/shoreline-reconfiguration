@@ -1,6 +1,6 @@
-
 from typing import Container
 
+import leafmap.kepler as leafmap
 import streamlit as st
 from streamlit.state.session_state import SessionStateStatProvider
 
@@ -44,8 +44,16 @@ def app():
             with col2:
                 st.image('https://assets.sealevelrise.org/2018/10/315b03518bdc8ad603b0ef7919ed2b5f-SLR-speeding-up-New-York-English.png')
 
+            # leafmap.update_package()
 
-        
+            #Width for leafmap kepler has a problem because there is not if statement for width lets gooo we can implement this create pull request gogogo first open source
+            m = leafmap.Map(center=[40.7, -74.7], height=600, widescreen=False ,zoom=11,
+                max_zoom=16,
+                pitch=45,
+                bearing=0, width=500)
+            m.to_streamlit(800, 600)
+
+            
 
 
 
@@ -73,8 +81,8 @@ def app():
             st.title("This is the third page")
 
     but1, but2 = st.columns(2)
-    but1.button('Previous Page', on_click=decrement_counter)
-    but2.button('Next Page', on_click=increment_counter)
+    but1.button('<- Previous Page', on_click=decrement_counter)
+    but2.button('Next Page ->', on_click=increment_counter)
 
 
 
