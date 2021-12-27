@@ -10,7 +10,7 @@ apps = MultiApp()
 
 # Add all your application here
 apps.add_app("Storyboard", storyboard.app)
-apps.add_app("Data", data.app)
 apps.add_app("Ai", ai.app)
+apps.add_app("Data", data.app)
 # The main app
 apps.run()

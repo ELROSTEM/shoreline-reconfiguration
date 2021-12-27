@@ -1,3 +1,4 @@
+import gspread
 import streamlit as st
 from streamlit_echarts import st_echarts
 
@@ -75,7 +76,7 @@ def app():
             "textStyle": {"fontSize": 16},
         }
     }
-    option_animals = {
+    options_animals = {
         "title": {"text": "Vehicles in X City"},
         "legend": {"data": ["2015", "2016"]},
         "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
@@ -129,19 +130,55 @@ def app():
     }
 
 
+    google_api_credentials = {
+        "type": st.secrets['type'],
+        "project_id": st.secrets['project_id'],
+        "private_key_id": st.secrets['private_key_id'],
+        "private_key": st.secrets['private_key'],
+        "client_email":st.secrets['client_email'],
+        "client_id": st.secrets['client_id'],
+        "auth_uri": st.secrets['auth_uri'],
+        "token_uri": st.secrets['token_uri'],
+        "auth_provider_x509_cert_url": st.secrets['auth_provider_x509_cert_url'],
+        "client_x509_cert_url": st.secrets['client_x509_cert_url'],
+    }
+
+
+    sa = gspread.service_account_from_dict(google_api_credentials)
+    sh = sa.open('shoreline-reconfiguration')
+
+    wks = sh.worksheet('data')
+
+    st.write(wks.row_count)
+    st.write(wks.col_count)
+
+    visitors = 0
 
     st.title("DATA Collections")
 
     st.header("How can you help?")
-    st.markdown("Nowadays people are more aware of climate change and it's impacts. According to our data: around %visitors% people visit our park")
-    st.header("Who visit our parks?")
+    st.markdown(f"Nowadays people are more aware of climate change and it's impacts. According to our data: around {visitors} people visit our park")
+
+    st.subheader("Who visit our parks?")
     st_echarts(options=options_visitors, height="500px")
 
+    st.subheader("What is the impact of our sea wall?")
+    st_echarts(options=options_animals, height="500px", key="echarts")
+
+    # Using the "with" syntax
+    with st.form(key='my_form'):
+        text_input = st.text_input(label='Enter some text')
+
+        submit_button = st.form_submit_button(label='Submit')
+
+    if submit_button == True:
+        #Write the data into database
+        st.markdown("Hope you enjoyed the park!")
 
 
-    st.header("What is the impact of our sea wall?")
-    st_echarts(option_animals, height="500px", key="echarts")
-
-
-
-    st.write("yous hould explore streamlit components to learn what is possible")
+    #appending  new row using gspread
+        # body=[0, 4, 9,7,5] #the values should be a list
+        # worksheet.append_row(body, table_range="A1:E1") 
+        # #table_range should be range of columns in the sheet, example from A1 to E1 (A1:E1)
+        # other parameters are optional. 
+        # this will append the values in body to the last row in the sheet and it will not overwrite existing data.

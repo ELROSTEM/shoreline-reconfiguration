@@ -1,0 +1,6 @@
+#Ignore .streamlit
+*.streamlit
+
+#Ignore __pycache__
+**/__pycache__./apps/__pycache__
+./__pycache__

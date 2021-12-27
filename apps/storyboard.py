@@ -47,6 +47,7 @@ def app():
             # leafmap.update_package()
 
             #Width for leafmap kepler has a problem because there is not if statement for width lets gooo we can implement this create pull request gogogo first open source
+            #Kepler gl should download itsself when keplergl leafmap is imported
             m = leafmap.Map(center=[40.7, -74.7], height=600, widescreen=False ,zoom=11,
                 max_zoom=16,
                 pitch=45,
