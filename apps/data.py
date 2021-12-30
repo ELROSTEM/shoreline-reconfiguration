@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import gspread
 import streamlit as st
 from streamlit_echarts import st_echarts
@@ -92,7 +94,7 @@ def app():
         }
     }
     options_animals = {
-        "title": {"text": "Vehicles in X City"},
+        "title": {"text": "Animals sighted in Park"},
         "legend": {"data": ["2015", "2016"]},
         "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
         "grid": {"containLabel": True, "left": 20},
@@ -145,39 +147,59 @@ def app():
     }
 
 
-    # Save API calls because I am broke
+    # # Save API calls because I am broke
     # sa = gspread.service_account_from_dict(google_api_credentials)
     # sh = sa.open('shoreline-reconfiguration')
 
     # wks = sh.worksheet('data')
-
-    # st.write(wks.row_count)
-    # st.write(wks.col_count)
 
     # visitors = wks.row_count
     visitors = 0
 
     st.title("DATA Collections")
 
+    
     st.header("How can you help?")
-    st.markdown(f"Nowadays people are more aware of climate change and it's impacts. According to our data: around {visitors} people visit our park.")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown(f"""
+        Nowadays people are more awar of climate change and it's impacts. Accoridng to our data: around {visitors} people visit our park.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non tortor vel est faucibus tincidunt. Aliquam interdum enim id lectus ultrices, at consectetur arcu porttitor. Nunc ornare commodo viverra. Nunc suscipit tincidunt enim et fringilla. Aliquam viverra varius tellus, sit amet commodo metus. Sed nisl leo, sollicitudin vel elit in, consectetur malesuada dolor. Integer faucibus elit in suscipit hendrerit.
 
-    st.subheader("Who visit our parks?")
-    st_echarts(options=options_visitors, height="500px")
+Sed id eros eget diam suscipit commodo nec quis lacus. Aliquam ac magna imperdiet, dignissim libero et, aliquet velit. Etiam consectetur enim interdum tellus imperdiet commodo. Aliquam posuere tincidunt arcu id efficitur. Vestibulum convallis egestas ligula, non finibus ex accumsan eget. Aenean vel tellus quis magna eleifend ultricies ut et mi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
 
-    st.subheader("What is the impact of our sea wall?")
-    st_echarts(options=options_animals, height="500px", key="echarts")
+Donec gravida massa non sapien congue lacinia. Nunc lobortis ac purus quis congue. Donec suscipit hendrerit mauris, in mollis mi viverra non. Vivamus vestibulum nulla a risus consequat, a pulvinar nulla ornare. Curabitur faucibus in velit ut tempus. Proin ut nunc dignissim, hendrerit magna eget, bibendum lorem. Aenean mollis aliquet turpis, ac egestas dolor mollis vel.    
+        """)
+    with col2:
+        st_echarts(options=options_visitors, height="500px")
 
 
+    st.header("What is the impact of our sea wall?")
+    col1, col2 = st.columns(2)
+    with col1:
+        st_echarts(options=options_animals, height="500px", key="echarts")
+    with col2:
+        st.markdown(f"""
+        Nowadays people are more awar of climate change and it's impacts. Accoridng to our data: around {visitors} people visit our park.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non tortor vel est faucibus tincidunt. Aliquam interdum enim id lectus ultrices, at consectetur arcu porttitor. Nunc ornare commodo viverra. Nunc suscipit tincidunt enim et fringilla. Aliquam viverra varius tellus, sit amet commodo metus. Sed nisl leo, sollicitudin vel elit in, consectetur malesuada dolor. Integer faucibus elit in suscipit hendrerit.
+
+Sed id eros eget diam suscipit commodo nec quis lacus. Aliquam ac magna imperdiet, dignissim libero et, aliquet velit. Etiam consectetur enim interdum tellus imperdiet commodo. Aliquam posuere tincidunt arcu id efficitur. Vestibulum convallis egestas ligula, non finibus ex accumsan eget. Aenean vel tellus quis magna eleifend ultricies ut et mi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+
+Donec gravida massa non sapien congue lacinia. Nunc lobortis ac purus quis congue. Donec suscipit hendrerit mauris, in mollis mi viverra non. Vivamus vestibulum nulla a risus consequat, a pulvinar nulla ornare. Curabitur faucibus in velit ut tempus. Proin ut nunc dignissim, hendrerit magna eget, bibendum lorem. Aenean mollis aliquet turpis, ac egestas dolor mollis vel.    
+        """)
     #----------------------------------------------------------
     #Form
+    alge = 0
+    shape = 0
     
     form = st.empty()
     with form.container():
         # Form
         with st.form(key='my_form'):
             age = st.slider(label="What is your age?")
-            text_input = st.text_input(label='Did you like the park?')
+            review = st.text_input(label='Did you like the park?')
+            st.markdown(f"Your collected alge info is: {alge}")
+            st.markdown(f"You found {shape} special shapes")
 
             submit_button = st.form_submit_button(label='Submit')
 
@@ -188,14 +210,14 @@ def app():
         st.balloons()
 
         #Test
-        st.markdown(text_input)
+        date = datetime.now().strftime("%d/%m/%Y")
+        time = datetime.now().strftime("%H:%M:%S")
+        st.markdown(date)
+        st.markdown(time)
+        st.markdown(review)
         st.markdown(f"You are: {age}")
         st.markdown("Hope you enjoyed the park!")
 
         #Write the data into database
-        #appending  new row using gspread
-        # body=[0, 4, 9,7,5] #the values should be a list
-        # worksheet.append_row(body, table_range="A1:E1") 
-        # #table_range should be range of columns in the sheet, example from A1 to E1 (A1:E1)
-        # other parameters are optional. 
-        # this will append the values in body to the last row in the sheet and it will not overwrite existing data.
+        # body = [date, time, age, alge, shape, review]
+        # wks.append_row(body, table_range="A1:G1")
