@@ -23,7 +23,34 @@ def app():
         st.caption("Sea dikes are onshore structures with the principal function of protecting low-lying areas against flooding. Sea dikes are usually built as a mound of fine materials like sand and clay with a gentle seaward slope in order to reduce the wave runup and the erodible effect of the waves. The surface of the dike is armored with grass, asphalt, stones, or concrete slabs (USACE, 2005).")
 
 
-    
+    #Take Picture
+    picture = st.camera_input("Take a picture")
+    if picture:
+        # Save Image
+        img = Image.open(picture)
+        img = img.save("img.jpg")
+
+        # Read Image
+        img = cv2.imread("img.jpg")
+
+        ## convert to hsv
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+        ## mask of green (36,25,25) ~ (86, 255,255)
+        mask = cv2.inRange(hsv, (36, 25, 25), (70, 255,255))
+
+        ## slice the green
+        imask = mask>0
+        green = np.zeros_like(img, np.uint8)
+        green[imask] = img[imask]
+
+        ## save 
+        cv2.imwrite("green.png", green)
+
+
+        st.image(img, use_column_width=True, clamp= True)
+        st.image(green, use_column_width=True,clamp = True)
+
 
     #Upload Image
     img = st.file_uploader("Upload an image")
