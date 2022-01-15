@@ -9,8 +9,14 @@
 
 *.vscode
 
-#Ignore .streamlit
+# Ignore .streamlit
 *.streamlit
 
-#Ignore __pycache__
+# Ignore __pycache__
 **__pycache__
+
+# Ignore PNG
+*.png
+
+# Ignore JPG
+*.jpg

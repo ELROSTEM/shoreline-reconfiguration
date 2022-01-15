@@ -6,24 +6,29 @@ import streamlit as st
 from PIL import Image
 
 
-def create_opencv_image_from_stringio(img_stream, cv2_img_flag=0):
-    img_stream.seek(0)
-    img_array = np.asarray(bytearray(img_stream.read()), dtype=np.uint8)
-    return cv2.imdecode(img_array, cv2_img_flag)
-
-def get_opencv_img_from_buffer(buffer, flags):
-    bytes_as_np_array = np.frombuffer(buffer.read(), dtype=np.uint8)
-    return cv2.imdecode(bytes_as_np_array, flags)
-
 def app():
 
-    st.title("AI stuff")
-    st.write("do some ai stuff")
-    st.write("if you are doing this part you are a god and you are really just too smart so you dont even need to care about coding cause you are literally machine learning engineer pls teach me.")
+    st.title("AI for Costal Shoreline")
+
+
+    st.header("Algae Detection")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("""
+            Algae is an informal term for a large and diverse group of photosynthetic eukaryotic organisms. It is a polyphyletic grouping that includes species from multiple distinct clades. Included organisms range from unicellular microalgae, such as Chlorella, Prototheca and the diatoms, to multicellular forms, such as the giant kelp, a large brown alga which may grow up to 50 metres in length.
+            No definition of algae is generally accepted. One definition is that algae "have chlorophyll as their primary photosynthetic pigment and lack a sterile covering of cells around their reproductive cells".[3] Likewise, the colorless Prototheca under Chlorophyta are all devoid of any chlorophyll. Although cyanobacteria are often referred to as "blue-green algae", most authorities exclude all prokaryotes from the definition of algae.[4][5] Algae constitute a polyphyletic group[4] since they do not include a common ancestor, and although their plastids seem to have a single origin, from cyanobacteria,[6] they were acquired in different ways. Green algae are examples of algae that have primary chloroplasts derived from endosymbiotic cyanobacteria. Diatoms and brown algae are examples of algae with secondary chloroplasts derived from an endosymbiotic red alga.[7] Algae exhibit a wide range of reproductive strategies, from simple asexual cell division to complex forms of sexual reproduction.[8]
+        """)
+    with col2:
+        st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/NSW_seabed_1.JPG/330px-NSW_seabed_1.JPG")
+        st.caption("Sea dikes are onshore structures with the principal function of protecting low-lying areas against flooding. Sea dikes are usually built as a mound of fine materials like sand and clay with a gentle seaward slope in order to reduce the wave runup and the erodible effect of the waves. The surface of the dike is armored with grass, asphalt, stones, or concrete slabs (USACE, 2005).")
+
+
     
 
     #Upload Image
     img = st.file_uploader("Upload an image")
+    st.caption(""" Please click on the image uploader. If you are on IOS you can simply select the take photo option. If you are on PC please upload
+    a folder from your file explorer""")
     if img is not None:
 
         # Save Image
